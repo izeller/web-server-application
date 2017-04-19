@@ -12,10 +12,13 @@ To access the local server, open a browser at http://localhost:8080/p1
 
 ### REST API User
 The application also provides a REST API for User management.  
+
 ##### Auth
-HTTP basic authentication 
+HTTP basic authentication
+ 
 ##### Role
 ADMIN
+
 | Method | Endpoint | Usage | Returns
 | ------ | -------- | ----- | -------
 | GET | /users | Get users | Users
