@@ -17,7 +17,7 @@ HTTP basic authentication
 ##### Role
 ADMIN
 | Method | Endpoint | Usage | Returns
-| ------ | -------- | ----- | -----
+| ------ | -------- | ----- | ------s
 | GET | /users | Get users | Users
 | GET | /users/{id} | Get user | User
 | DELETE | /users/{id} | Delete user | Deleted User

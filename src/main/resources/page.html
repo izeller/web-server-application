@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Page</title>
+    <script>
+   		window.onload = function(){
+     	var a = document.getElementById("link1");
+     	a.href = a.href + "?from=" + escape(document.location.pathname);
+   }
+</script>
+</head>
+<body>
+ 	<h1>Hello: ${username}</h1>
+ 	<h3><a id="link1" href="/removeSession">Remove session</a><h3>
+
+</body>
+</html>
