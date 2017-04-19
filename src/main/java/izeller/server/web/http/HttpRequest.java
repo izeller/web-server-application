@@ -7,12 +7,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import izeller.server.security.model.Credentials;
 import izeller.server.security.model.User;
 import izeller.server.web.route.Route.RequestMethod;
 
@@ -38,9 +41,6 @@ public class HttpRequest {
 	
 	public String getBody(){
 		return body;
-	}
-	public com.sun.net.httpserver.Headers getHeaders(){
-		 return exchange.getRequestHeaders();
 	}
 	
 	public String getPath(){
@@ -173,6 +173,25 @@ public class HttpRequest {
 
 	public String getFirstPathParam() {
 		return pathParams.get(0);
+	}
+
+	public Optional<Credentials> getBasicAuthCredentials() {
+		
+		String auth = exchange.getRequestHeaders().getFirst("Authorization");
+		if(auth==null){
+			return Optional.empty();
+		}
+		int sp = auth.indexOf (' ');
+		if (sp == -1 || !auth.substring(0, sp).equals ("Basic")) {
+			return Optional.empty();
+		}
+		
+		byte[] b = Base64.getDecoder().decode(auth.substring(sp+1));
+		String userpass = new String (b);
+		int colon = userpass.indexOf (':');
+		String name = userpass.substring (0, colon);
+		String pass = userpass.substring (colon+1);
+		return Optional.of(new Credentials(name, pass));
 	}
 
 }

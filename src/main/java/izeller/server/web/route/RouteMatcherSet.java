@@ -6,16 +6,16 @@ import java.util.Map;
 
 import izeller.server.web.route.Route.RequestMethod;
 
-public class RouteMatcherCollection {
+public class RouteMatcherSet {
 
 	private Map<RequestMethod,RouteMatcher> routesMatcher = new HashMap<>();
 	
-	public RouteMatcherCollection(List<RouteMatcher> routesMatcher){
+	public RouteMatcherSet(List<RouteMatcher> routesMatcher){
 		routesMatcher.stream().forEach(routeMatcher -> add(routeMatcher));
 	}
 
 	public void add(RouteMatcher routeMatcher){
-		routesMatcher.put(routeMatcher.getRouteHandler().getRoute().getRequestMethod(), routeMatcher);
+		routesMatcher.put(routeMatcher.getControllerHandler().getRoute().getRequestMethod(), routeMatcher);
 	}
 	
 	public boolean matches(){

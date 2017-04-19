@@ -7,11 +7,11 @@ import izeller.server.web.ControllerHandler.RequestInterceptor;
 import izeller.server.web.http.HttpRequest;
 import izeller.server.security.model.Session;
 
-public class AuthInterceptor implements RequestInterceptor{
+public class SessionAuthInterceptor implements RequestInterceptor{
 
 	private SecurityService securityService;
 	
-	public AuthInterceptor(SecurityService securityService){
+	public SessionAuthInterceptor(SecurityService securityService){
 		this.securityService = securityService;
 	}
 	
@@ -27,7 +27,7 @@ public class AuthInterceptor implements RequestInterceptor{
 			
 		}else{
 			
-			throw new NotAuthorizedException(Auth.SESSION, request);
+			throw new NotAuthorizedException(Auth.SESSION, request.getPath());
 		}
 		
 	}

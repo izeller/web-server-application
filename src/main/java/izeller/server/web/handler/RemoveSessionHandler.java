@@ -17,7 +17,7 @@ public class RemoveSessionHandler implements ModelHandler {
 	@Override
 	public ModelResponse execute(HttpRequest request) {
 		sessionRepository.removeSession(request.getSessionId());
-		throw new NotAuthorizedException(Auth.SESSION, request, request.getQueryId("from"));
+		throw new NotAuthorizedException(Auth.SESSION, request.getPath(), request.getQueryId("from"));
 	}
 
 }

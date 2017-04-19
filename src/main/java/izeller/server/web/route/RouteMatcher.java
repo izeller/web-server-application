@@ -5,19 +5,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import izeller.server.web.ControllerHandler;
-import izeller.server.web.ControllerHandler.RequestInterceptor;
 
 public class RouteMatcher{
 
-	private ControllerHandler routeHandler;
+	private ControllerHandler controllerHandler;
 	private List<String> pathParams = new ArrayList<>();
 	private String path;
 	private boolean matches = false;
 	
-	public RouteMatcher(ControllerHandler routeHandler, String path){
-		this.routeHandler = routeHandler;
+	public RouteMatcher(ControllerHandler controllerHandler, String path){
+		this.controllerHandler = controllerHandler;
 		this.path = path;
-		Matcher matcher = routeHandler.getMatcher(path);
+		Matcher matcher = controllerHandler.getMatcher(path);
 		matches = matcher.matches();
 		if(matches){
 			for(int i = 0; i<matcher.groupCount(); i++){
@@ -30,8 +29,8 @@ public class RouteMatcher{
 		return matches;
 	}
 
-	public ControllerHandler getRouteHandler(){
-		return routeHandler;
+	public ControllerHandler getControllerHandler(){
+		return controllerHandler;
 	}
 
 	public List<String> getPathParams(){

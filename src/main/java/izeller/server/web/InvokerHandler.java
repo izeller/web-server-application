@@ -11,7 +11,7 @@ import izeller.server.web.http.HttpRequest;
 import izeller.server.web.http.HttpResponse;
 import izeller.server.web.model.ModelResponse;
 import izeller.server.web.route.RouteMatcher;
-import izeller.server.web.route.RouteMatcherCollection;
+import izeller.server.web.route.RouteMatcherSet;
 import izeller.server.web.route.Router;
 
 public class InvokerHandler {
@@ -28,20 +28,20 @@ public class InvokerHandler {
 
 		try{
 			logger.info("Routing path: "+request.getPath());
-			RouteMatcherCollection routeMatcherCollection = router.get(request.getPath());
+			RouteMatcherSet routeMatcherCollection = router.get(request.getPath());
 
 			validate(routeMatcherCollection, request);
 			RouteMatcher routeMatcher = routeMatcherCollection.get(request.getRequestMethod());
 			request.addPathParams(routeMatcher.getPathParams());
 
-			ControllerHandler controllerHandler = routeMatcher.getRouteHandler();
+			ControllerHandler controllerHandler = routeMatcher.getControllerHandler();
 			controllerHandler.getInterceptors().forEach(interceptor -> interceptor.intercept(request));
 
 			ModelResponse modelResponse = controllerHandler.execute(request);
 			response.sendReponse(modelResponse, controllerHandler.getView());
 
 		}catch(ForwardException forwardException){
-
+			logger.info(forwardException.getMessage(), forwardException);
 			response.addCookie(forwardException.getCookie());
 			response.sendRedirect(forwardException.getRedirect());
 
@@ -51,14 +51,14 @@ public class InvokerHandler {
 			retryAuth(response, notAuthException);
 
 		}catch(HttpException httpException){
-
+			logger.info(httpException.getMessage(), httpException);
 			response.writeStatusCodeResponse(httpException.getHttpCode());
 
 		}
 
 	}
 
-	private void validate(RouteMatcherCollection routeMatcherCollection, HttpRequest request) {
+	private void validate(RouteMatcherSet routeMatcherCollection, HttpRequest request) {
 		
 		if(!routeMatcherCollection.matches()){
 			logger.info("Not found path "+request.getPath());

@@ -22,17 +22,17 @@ public class Router {
 		controllerHandler.add(handler);
 	}
 	
-	public void attach(ControllerHandler routeHandler, SecurityRouteData security){
-		routeHandler.addInterceptors(securityManager.getInterceptors(security));
-		controllerHandler.add(routeHandler);
+	public void attach(ControllerHandler handler, SecurityRouteData security){
+		handler.addInterceptors(securityManager.getInterceptors(security));
+		controllerHandler.add(handler);
 	}
 	
-	public RouteMatcherCollection get(String path){
+	public RouteMatcherSet get(String path){
 		
 		List<RouteMatcher> routesMatcher = controllerHandler.stream().map(routeHandler -> new RouteMatcher(routeHandler, path))
 		.filter(routeMatcher -> routeMatcher.matches()).collect(Collectors.toList());
 
-		return new RouteMatcherCollection(routesMatcher);
+		return new RouteMatcherSet(routesMatcher);
 	}
 
 }

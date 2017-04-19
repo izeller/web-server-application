@@ -1,23 +1,22 @@
 package izeller.server.security;
 
 import izeller.server.security.model.SecurityRouteData.Auth;
-import izeller.server.web.http.HttpRequest;
 
 public class NotAuthorizedException extends RuntimeException {
 
 	private static final long serialVersionUID = -192747107200237235L;
-	private HttpRequest request;
 	private String from;
 	private Auth auth;
+	private String path;
 	
-	public NotAuthorizedException(Auth auth, HttpRequest request) {
+	public NotAuthorizedException(Auth auth, String path) {
 		this.auth = auth;
-		this.request = request;
+		this.path = path;
 	}
 	
-	public NotAuthorizedException(Auth auth, HttpRequest request, String from) {
+	public NotAuthorizedException(Auth auth, String path, String from) {
 		this.auth = auth;
-		this.request = request;
+		this.path = path;
 		this.from = from;
 	}
 
@@ -28,7 +27,7 @@ public class NotAuthorizedException extends RuntimeException {
 		if(from!=null){
 			return from;
 		};
-		return request.getPath();
+		return path;
 	}
 	
 

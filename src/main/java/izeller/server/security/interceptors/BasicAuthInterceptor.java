@@ -1,6 +1,5 @@
 package izeller.server.security.interceptors;
 
-import java.util.Base64;
 import java.util.Optional;
 
 import izeller.server.security.NotAuthorizedException;
@@ -22,32 +21,12 @@ public class BasicAuthInterceptor implements RequestInterceptor{
 	@Override
 	public void intercept(HttpRequest request) {
 		
-		Optional<User> userOpt = securityService.getAuthenticatedUser(getCredentials(request));
-		User user = userOpt.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request));
+		Optional<Credentials> credentialOp = request.getBasicAuthCredentials();
+		Credentials credentials = credentialOp.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request.getPath()));
+		Optional<User> userOpt = securityService.getAuthenticatedUser(credentials);
+		User user = userOpt.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request.getPath()));
 		request.setPrincipalUser(user);
 
 	}
-	
-	private Credentials getCredentials(HttpRequest request){
-		
-		String auth = request.getHeaders().getFirst ("Authorization");
-
-		if (auth == null) {
-			throw new NotAuthorizedException(Auth.BASIC, request);
-		}
-		
-		int sp = auth.indexOf (' ');
-		if (sp == -1 || !auth.substring(0, sp).equals ("Basic")) {
-			throw new NotAuthorizedException(Auth.BASIC, request);
-		}
-		
-		byte[] b = Base64.getDecoder().decode(auth.substring(sp+1));
-		String userpass = new String (b);
-		int colon = userpass.indexOf (':');
-		String name = userpass.substring (0, colon);
-		String pass = userpass.substring (colon+1);
-		return new Credentials(name, pass);
-	}
-
 
 }

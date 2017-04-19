@@ -39,7 +39,7 @@ public class LoginActionHandler implements ModelHandler {
 																request.getPostId("password")));
 		
 		String redirect = getRedirect(request);
-		User user = userOp.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request, redirect));
+		User user = userOp.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request.getPath(), redirect));
 
 		Session newSession = new Session(user);
 		securityService.addSession(newSession);

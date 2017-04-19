@@ -3,9 +3,9 @@ package izeller.server.security;
 import java.util.ArrayList;
 import java.util.List;
 
-import izeller.server.security.interceptors.AuthInterceptor;
 import izeller.server.security.interceptors.BasicAuthInterceptor;
 import izeller.server.security.interceptors.RoleInterceptor;
+import izeller.server.security.interceptors.SessionAuthInterceptor;
 import izeller.server.security.model.SecurityRouteData;
 import izeller.server.security.model.SecurityRouteData.Auth;
 import izeller.server.web.ControllerHandler.RequestInterceptor;
@@ -29,7 +29,7 @@ public class SecurityInterceptorManager {
 			
 		}else if(Auth.SESSION.equals(security.getAuth())){
 			
-			interceptors.add(new AuthInterceptor(securityService));
+			interceptors.add(new SessionAuthInterceptor(securityService));
 		}
 		
 		if(security.containsRoles()){

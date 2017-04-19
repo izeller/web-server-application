@@ -34,9 +34,7 @@ public class Route {
 	public Pattern getPattern(){
 		return pattern;
 	}
-	public Route(String path, RequestMethod get, Auth sessionBased, Role page1) {
-		
-	}
+
 
 	public String getPath(){
 		return path;
