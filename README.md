@@ -7,7 +7,8 @@ This application has 3 different pages. In order to access, the user needs autho
  
 To access the local server, open a browser at http://localhost:8080/p1
 ### Build and Deploy
-   $ mvn clean install server
+   $ mvn clean install web-server-application
+   
    $ java -jar server.jar
 
 ### REST API User
@@ -29,7 +30,7 @@ ADMIN
 ### Users
 | User | Password | Roles
 | -----| -------- | ----- 
-| admin | admin | ADMIN, ROLE1 
+| admin | admin | ADMIN, ROLE3
 | user1 | user1 | ROLE1 
 | user2 | user2 | ROLE2 
 | user23 | user23 | ROLE2, ROLE3

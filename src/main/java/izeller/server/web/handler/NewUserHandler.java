@@ -57,7 +57,7 @@ public class NewUserHandler implements ModelHandler {
 		try{
 			return Optional.of(gson.fromJson(body, NewUser.class));
 		}catch(JsonSyntaxException e){
-			logger.error(e.getMessage(), e);
+			logger.info(e.getMessage(), e);
 			return Optional.empty();
 		}
 	}

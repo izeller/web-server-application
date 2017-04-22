@@ -27,7 +27,7 @@ public class InvokerHandler {
 	public void invoke(final HttpRequest request, final HttpResponse response){
 
 		try{
-			logger.info("Routing path: "+request.getPath());
+			logger.info("Routing path: "+request.getRequestMethod()+request.getPath());
 			RouteMatcherSet routeMatcherCollection = router.get(request.getPath());
 
 			validate(routeMatcherCollection, request);
@@ -46,16 +46,14 @@ public class InvokerHandler {
 			response.sendRedirect(forwardException.getRedirect());
 
 		}catch(NotAuthorizedException notAuthException){
-			
 			logger.info("Not Auth route: "+request.getPath());
 			retryAuth(response, notAuthException);
-
+			
 		}catch(HttpException httpException){
 			logger.info(httpException.getMessage(), httpException);
 			response.writeStatusCodeResponse(httpException.getHttpCode());
 
 		}
-
 	}
 
 	private void validate(RouteMatcherSet routeMatcherCollection, HttpRequest request) {

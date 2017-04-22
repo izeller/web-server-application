@@ -38,7 +38,6 @@ public class App {
 		userRepository.save(new User("user1", "user1").addRole(Role.PAGE_1));
 		userRepository.save(new User("user2", "user2").addRole(Role.PAGE_2));
 		userRepository.save(new User("user23", "user23").addRole(Role.PAGE_2).addRole(Role.PAGE_3));
-		
 		userRepository.save(new User("admin", "admin").addRole(Role.ADMIN).addRole(Role.PAGE_3));
 	
 		SessionRepository sessionRepository = new SessionRepository();
@@ -77,7 +76,6 @@ public class App {
 				.addView(new JsonView())
 				.create(),
 				new SecurityRouteData(Auth.BASIC, Role.ADMIN));
-		
 		router.attach(new ControllerHandler.Builder(new Route("/users/([a-zA-Z0-9]+)", RequestMethod.GET))
 				.addHandler(new UserPerIdHandler(userRepository))
 				.addView(new JsonView())

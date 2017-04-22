@@ -15,7 +15,7 @@ import izeller.server.web.http.HttpResponse;
 public class DispatcherHandler implements HttpHandler {
 
 	final static Logger logger = Logger.getLogger(DispatcherHandler.class);
-	
+
 	private InvokerHandler invokerHandler;
 
 	public DispatcherHandler(InvokerHandler invokerHandler) {
@@ -27,7 +27,7 @@ public class DispatcherHandler implements HttpHandler {
 
 		HttpRequest httpRequest = null;
 		HttpResponse httpResponse = null;
-
+		
 		try{
 
 			httpRequest = new HttpRequest(httpExchange);
@@ -39,12 +39,6 @@ public class DispatcherHandler implements HttpHandler {
 			if(httpResponse!=null){
 				httpResponse.writeStatusCodeResponse(HttpCode.INTERNAL_ERROR);
 			}
-
 		}
-
 	}
-
-
-
-
 }
