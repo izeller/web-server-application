@@ -7,9 +7,11 @@ This application has 3 different pages. In order to access, the user needs autho
  
 To access the local server, open a browser at http://localhost:8080/p1
 ### Build and Deploy
-   $ mvn clean install web-server-application
+   $ mvn clean package web-server-application
    
-   $ java -jar server.jar
+   $ cd /target
+   
+   $ java -jar web-server-application.jar
 
 ### REST API User
 The application also provides a REST API for User management.  
@@ -36,3 +38,7 @@ ADMIN
 | user23 | user23 | ROLE2, ROLE3
 
 ### TODO
+
+* Improve code coverage
+* Refactor some classes (for example: HttpRequest), writing cleaner code and for easier unit testing.
+* Add content negotiation. XmlView can be implemented, and ControllerHandler should accept a set of views. Then a different view can be used, depending on the Accept header. 

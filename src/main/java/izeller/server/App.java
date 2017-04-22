@@ -3,6 +3,8 @@ package izeller.server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import org.apache.log4j.Logger;
+
 import com.sun.net.httpserver.HttpServer;
 
 import izeller.server.security.model.Role;
@@ -30,6 +32,8 @@ import izeller.server.web.view.HtmlView;
 import izeller.server.web.view.JsonView;
 
 public class App {
+	
+	final static Logger logger = Logger.getLogger(App.class);
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -91,7 +95,8 @@ public class App {
 				.addView(new JsonView())
 				.create(),
 				new SecurityRouteData(Auth.BASIC, Role.ADMIN));
-		
+		logger.info("Creating server...");
+		logger.info("Starting server...");
 		httpServer.createContext("/", new DispatcherHandler(new InvokerHandler(router)));
 		httpServer.start();
 	}

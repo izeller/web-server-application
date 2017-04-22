@@ -41,7 +41,7 @@ public class InvokerHandler {
 			response.sendReponse(modelResponse, controllerHandler.getView());
 
 		}catch(ForwardException forwardException){
-			logger.info(forwardException.getMessage(), forwardException);
+			logger.info("Forward to "+ forwardException.getRedirect().getUrl());
 			response.addCookie(forwardException.getCookie());
 			response.sendRedirect(forwardException.getRedirect());
 
@@ -50,7 +50,7 @@ public class InvokerHandler {
 			retryAuth(response, notAuthException);
 			
 		}catch(HttpException httpException){
-			logger.info(httpException.getMessage(), httpException);
+			logger.info("Status Code "+ httpException.getHttpCode().statusCode);
 			response.writeStatusCodeResponse(httpException.getHttpCode());
 
 		}
