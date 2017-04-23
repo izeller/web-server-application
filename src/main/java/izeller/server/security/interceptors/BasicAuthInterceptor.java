@@ -22,9 +22,9 @@ public class BasicAuthInterceptor implements RequestInterceptor{
 	public void intercept(HttpRequest request) {
 		
 		Optional<Credentials> credentialOp = request.getBasicAuthCredentials();
-		Credentials credentials = credentialOp.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request.getPath()));
+		Credentials credentials = credentialOp.orElseThrow(() -> new NotAuthorizedException(Auth.BASIC, request.getPath()));
 		Optional<User> userOpt = securityService.getAuthenticatedUser(credentials);
-		User user = userOpt.orElseThrow(() -> new NotAuthorizedException(Auth.SESSION, request.getPath()));
+		User user = userOpt.orElseThrow(() -> new NotAuthorizedException(Auth.BASIC, request.getPath()));
 		request.setPrincipalUser(user);
 
 	}

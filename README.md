@@ -29,6 +29,18 @@ ADMIN
 | DELETE | /users/{id} | Delete user | Deleted User
 | POST | /users | Add or update user | User
 
+Post Json Data:
+```json
+{
+	"user": "user7",
+	"password":"user7",
+	"roles": [
+		"PAGE_1",
+		"PAGE_2",
+		"PAGE_3"
+   ]
+}
+```
 ### Users
 | User | Password | Roles
 | -----| -------- | ----- 
